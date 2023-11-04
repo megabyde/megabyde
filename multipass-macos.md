@@ -18,8 +18,8 @@
    - If you do not wish to set a password, just hit ENTER when asked for a passphrase
    - If you generated a key, close and reopen Terminal to start a new shell session
 1. Set up and configure [XQuartz](https://www.xquartz.org), an X11 display server for MacOS
-	 - Download and install a DMG directly from website
-	 - Logout/login or reboot the computer afterwards
+	 - Download and install a DMG directly from the website
+	 - Logout/login or reboot the computer afterward
 	 - Allow X11 forwarding to your host by running `xhost +`
 	 - Once you have XQuartz running, go to its "Preferences" and check the "Allow connections from network clients" box
 
@@ -51,6 +51,6 @@
 ## Connect VSCode to your Multipass VM
 
 1. Open VSCode and click on the green button in the bottom left corner; this should open a menu listing several "Remote-SSH" options
-1. Click "Remote-SSH: Connect to Host...", enter `ubuntu@<ip_address>`, replacing with the address of your Multipass VM
+1. Click "Remote-SSH: Connect to Host..." and enter `ubuntu@<ip_address>`, replacing with the address of your Multipass VM
 1. This will open a new VSCode window; feel free to close the old window
 1. After a brief installation of the VSCode backend onto your VM, the bottom left corner's green button should now read: `SSH: <ip_address>`
