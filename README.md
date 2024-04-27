@@ -7,4 +7,4 @@
 
 ## Posts
 
-- [Using Multipass under MacOS](multipass-macos.md)
+- [Using Multipass under macOS](multipass-macos.md)
