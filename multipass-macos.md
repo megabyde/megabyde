@@ -52,19 +52,29 @@
    primary                 Running           192.168.64.5     Ubuntu 24.04 LTS
    ```
 
+1. In Terminal, determine your Multipass VM's IP address and save it for later
+   steps:
+
+   ```console
+   $ IP_ADDRESS=$(multipass info primary --format csv | awk -F, '/^primary/ { print $3 }')
+   $ printf '%s\n' "${IP_ADDRESS:?failed to determine the Multipass VM IP address}"
+   192.168.64.5
+   ```
+
 1. We can then use this VM using `multipass shell` or through SSH with X
    forwarding as follows:
 
    ```console
-   $ ssh -X ubuntu@$(multipass info primary --format csv | awk -F, '/^primary/ { print $3 }')
+   ssh -X ubuntu@${IP_ADDRESS:?}
    ```
 
 ## Connect VSCode to your Multipass VM
 
 1. Open VSCode and click on the green button in the bottom left corner; this
    should open a menu listing several "Remote-SSH" options.
-1. Click "Remote-SSH: Connect to Host..." and enter `ubuntu@<ip_address>`,
-   replacing with the address of your Multipass VM.
+1. Click "Remote-SSH: Connect to Host..." and enter `ubuntu@${IP_ADDRESS:?}`
+   using the value you looked up in the previous section.
 1. This will open a new VSCode window; feel free to close the old window.
 1. After a brief installation of the VSCode back end onto your VM, the bottom
-   left corner's green button should now read: `SSH: <ip_address>`.
+   left corner's green button should now read `SSH: 192.168.64.5` (with your
+   VM's actual IP address).
