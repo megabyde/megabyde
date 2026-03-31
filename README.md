@@ -7,4 +7,5 @@
 
 ## Posts
 
+- [Aggregating benchmark metrics with missing results](aggregating-benchmark-metrics.md)
 - [Using Multipass under macOS](multipass-macos.md)
