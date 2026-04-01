@@ -111,26 +111,15 @@ Ruleset:
 
 ## Bootstrap Script
 
-### Assets
-
-Reusable files for this post live in `assets/github-repo-setup/`:
-
-- [`assets/github-repo-setup/ruleset-main.json`](assets/github-repo-setup/ruleset-main.json)
-- [`assets/github-repo-setup/ruleset-tags.json`](assets/github-repo-setup/ruleset-tags.json)
-- [`assets/github-repo-setup/bootstrap.sh`](assets/github-repo-setup/bootstrap.sh)
-- [`assets/github-repo-setup/CODEOWNERS.example`](assets/github-repo-setup/CODEOWNERS.example)
-
-Use them as templates, then replace the placeholder owners, checks, and repository name.
-
 > [!IMPORTANT]
-> Edit these templates first before running the bootstrap script:
+> Start by editing [`assets/github-repo-setup/CODEOWNERS.example`](assets/github-repo-setup/CODEOWNERS.example).
+> Review [`assets/github-repo-setup/ruleset-main.json`](assets/github-repo-setup/ruleset-main.json)
+> and [`assets/github-repo-setup/ruleset-tags.json`](assets/github-repo-setup/ruleset-tags.json),
+> and adjust them only if your repository needs different checks or rules.
 
-- [`assets/github-repo-setup/ruleset-main.json`](assets/github-repo-setup/ruleset-main.json)
-- [`assets/github-repo-setup/ruleset-tags.json`](assets/github-repo-setup/ruleset-tags.json)
-- [`assets/github-repo-setup/CODEOWNERS.example`](assets/github-repo-setup/CODEOWNERS.example)
-
-Then use [`assets/github-repo-setup/bootstrap.sh`](assets/github-repo-setup/bootstrap.sh) to apply
-the repository settings and both rulesets in one pass:
+Then run [`assets/github-repo-setup/bootstrap.sh`](assets/github-repo-setup/bootstrap.sh) to apply
+the repository settings and both rulesets in one pass. The script resolves its JSON inputs relative
+to its own location, so you can invoke it from anywhere:
 
 ```bash
 ./assets/github-repo-setup/bootstrap.sh OWNER/REPO

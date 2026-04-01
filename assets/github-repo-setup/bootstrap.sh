@@ -2,6 +2,7 @@
 set -euo pipefail
 
 REPO=${1:?usage: bootstrap.sh OWNER/REPO}
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 
 gh repo edit "$REPO" \
     --enable-squash-merge \
@@ -11,7 +12,7 @@ gh repo edit "$REPO" --enable-merge-commit=false
 gh repo edit "$REPO" --enable-rebase-merge=false
 
 gh api --method POST "repos/$REPO/rulesets" \
-    --input assets/github-repo-setup/ruleset-main.json
+    --input "$SCRIPT_DIR/ruleset-main.json"
 
 gh api --method POST "repos/$REPO/rulesets" \
-    --input assets/github-repo-setup/ruleset-tags.json
+    --input "$SCRIPT_DIR/ruleset-tags.json"
