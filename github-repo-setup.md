@@ -61,7 +61,8 @@ Typical checks:
 - test
 - lint
 
-> [!TIP] Require branches to be up to date before merging if you want a stricter merge queue.
+> [!TIP]
+> Require branches to be up to date before merging if you want a stricter merge queue.
 
 ### 6. Conversation Requirements
 
