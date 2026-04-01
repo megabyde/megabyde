@@ -1,0 +1,4 @@
+*           @org/core-team
+/infra/     @org/devops
+/.github/   @org/devops
+/api/       @org/backend
