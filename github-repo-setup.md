@@ -1,6 +1,9 @@
 # Setting up a GitHub repository
 
-## Goals
+The target policy is straightforward: `main` is pull-request-only, CI is a required gate, history
+stays linear, stale branches disappear automatically, and release tags do not move.
+
+## Target policy
 
 - No direct pushes to `main`
 - All changes go through pull requests
@@ -10,37 +13,31 @@
 - Release tags are immutable
 
 > [!NOTE]
+>
 > Prefer **Rulesets** over legacy branch protection.
 
-## Configure in the GitHub UI
+## Configure merge policy
 
-### 1. Settings -> General -> Pull Requests
-
-#### Merge configuration
+In `Settings -> General -> Pull Requests`:
 
 - Enable squash merging
 - Disable merge commits
-- Optionally allow rebase merging
+- Optionally allow rebase merging if you want to preserve commit boundaries
 - Enable automatic deletion of head branches
 
-### 2. Settings -> Rules -> Rulesets
+Keep the allowed merge modes aligned with the history policy. If you require linear history, leaving
+merge commits enabled just creates dead settings.
 
-Create:
+## Create a branch ruleset for `main`
+
+In `Settings -> Rules -> Rulesets`, create a ruleset with:
 
 - Target: Branches
 - Apply to: `main`
 
-### 3. Merge Strategy
+Then enable the following requirements.
 
-Keep the allowed merge modes aligned with the history policy:
-
-- Enable squash merge
-- Disable merge commits
-- Optionally disable rebase merge too if you want one merge style only
-
-If you require linear history, allowing merge commits just creates dead settings.
-
-### 4. Pull Request Requirements
+### Pull request requirements
 
 ```diff
 + Require a pull request before merging
@@ -49,7 +46,7 @@ If you require linear history, allowing merge commits just creates dead settings
 + Require approval of most recent push
 ```
 
-### 5. Status Checks
+### Status checks
 
 ```diff
 + Require status checks to pass
@@ -62,28 +59,29 @@ Typical checks:
 - lint
 
 > [!TIP]
+>
 > Require branches to be up to date before merging if you want a stricter merge queue.
 
-### 6. Conversation Requirements
+### Conversation requirements
 
 ```diff
 + Require conversation resolution before merging
 ```
 
-### 7. History Requirements
+### History requirements
 
 ```diff
 + Require linear history
 ```
 
-### 8. Protections
+### Protections
 
 ```diff
 - Allow force pushes
 - Allow deletions
 ```
 
-### 9. CODEOWNERS
+## Add `CODEOWNERS`
 
 ```text
 .github/CODEOWNERS
@@ -97,9 +95,9 @@ replace the placeholder teams.
 + Require review from Code Owners
 ```
 
-### 10. Tag Protection
+## Create a tag ruleset
 
-Ruleset:
+Create a second ruleset with:
 
 - Target: Tags
 - Apply to: `v*`
@@ -113,14 +111,16 @@ Ruleset:
 ## Bootstrap Script
 
 > [!IMPORTANT]
-> Start by editing [`assets/github-repo-setup/CODEOWNERS.example`](assets/github-repo-setup/CODEOWNERS.example).
+>
+> Start by editing
+> [`assets/github-repo-setup/CODEOWNERS.example`](assets/github-repo-setup/CODEOWNERS.example).
 > Review [`assets/github-repo-setup/ruleset-main.json`](assets/github-repo-setup/ruleset-main.json)
-> and [`assets/github-repo-setup/ruleset-tags.json`](assets/github-repo-setup/ruleset-tags.json),
-> and adjust them only if your repository needs different checks or rules.
+> and [`assets/github-repo-setup/ruleset-tags.json`](assets/github-repo-setup/ruleset-tags.json).
+> Change them only if your repository needs different checks or exceptions.
 
-Then run [`assets/github-repo-setup/bootstrap.sh`](assets/github-repo-setup/bootstrap.sh) to apply
-the repository settings and both rulesets in one pass. The script resolves its JSON inputs relative
-to its own location, so you can invoke it from anywhere:
+Then run [`assets/github-repo-setup/bootstrap.sh`](assets/github-repo-setup/bootstrap.sh). It
+applies the repository settings and both rulesets in one pass. The script resolves its JSON inputs
+relative to its own location, so you can invoke it from anywhere:
 
 ```bash
 ./assets/github-repo-setup/bootstrap.sh OWNER/REPO

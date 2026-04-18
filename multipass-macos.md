@@ -1,8 +1,11 @@
-# Using Multipass under macOS
+# Using Multipass on macOS
 
-## Setup dependencies on your host machine
+This note covers the host-side setup, launching a `primary` VM, and connecting to it from a terminal
+or VS Code.
 
-1. Install [Multipass](https://multipass.run) using [Homebrew](https://brew.sh):
+## Prepare the host
+
+1. Install [Multipass](https://multipass.run) with [Homebrew](https://brew.sh):
 
    ```console
    $ brew install --cask multipass
@@ -10,7 +13,7 @@
    🍺  multipass was successfully installed!
    ```
 
-1. Verify the installation was successful:
+1. Verify that the CLI and daemon are available:
 
    ```console
    $ multipass version
@@ -18,20 +21,21 @@
    multipassd  1.13.1+mac
    ```
 
-1. If you don't have `~/.ssh/id_rsa.pub`, you can generate one with `ssh-keygen -t rsa`
-   - If you do not wish to set a password, just hit ENTER when asked for a passphrase
-   - If you generated a key, close and reopen Terminal to start a new shell session
-1. Set up and configure [XQuartz](https://www.xquartz.org), an X11 display server for macOS
-   - Download and install a DMG directly from the website
-   - Logout/login or reboot the computer afterward
-   - Allow X11 forwarding to your host by running `xhost +`
-   - Once you have XQuartz running, go to its "Preferences" and check the
-     "Allow connections from network clients" box
+1. Make sure you have an SSH public key at `~/.ssh/id_rsa.pub`.
+   - If you do not, generate one with `ssh-keygen -t rsa`.
+   - If you leave the passphrase empty, just press ENTER at the prompt.
+   - If you created a new key, restart Terminal so the new shell session picks it up cleanly.
 
-## Setup your Multipass VM
+1. Install and configure [XQuartz](https://www.xquartz.org) if you need X11 forwarding.
+   - Download and install the DMG from the project website.
+   - Log out and back in, or reboot, after installation.
+   - In XQuartz preferences, enable `Allow connections from network clients`.
+   - Start XQuartz, then run `xhost +` on the host.
 
-1. Create a Linux guest named `primary`; your `primary` instance gets special
-   treatment with integration to your native filesystem:
+## Launch the VM
+
+1. Create a guest named `primary`. Multipass gives `primary` special treatment for host filesystem
+   integration:
 
    ```console
    $ multipass launch --name primary --cpus 4 --mem 4G --disk 10G --cloud-init - <<EOF
@@ -43,8 +47,7 @@
    EOF
    ```
 
-1. You now have a Ubuntu 20.04 (Focal) VM named `primary` with a default user
-   named `ubuntu`:
+1. Verify that the instance is running:
 
    ```console
    $ multipass list
@@ -52,8 +55,10 @@
    primary                 Running           192.168.64.5     Ubuntu 24.04 LTS
    ```
 
-1. In Terminal, determine your Multipass VM's IP address and save it for later
-   steps:
+   The exact Ubuntu LTS version depends on the current default image, but the default user is
+   `ubuntu`.
+
+1. Resolve the VM IP address and keep it for later:
 
    ```console
    $ IP_ADDRESS=$(multipass info primary --format csv | awk -F, '/^primary/ { print $3 }')
@@ -61,20 +66,23 @@
    192.168.64.5
    ```
 
-1. We can then use this VM using `multipass shell` or through SSH with X
-   forwarding as follows:
+1. Connect either through the built-in shell:
+
+   ```console
+   multipass shell primary
+   ```
+
+   or through SSH with X forwarding:
 
    ```console
    ssh -X ubuntu@${IP_ADDRESS:?}
    ```
 
-## Connect VSCode to your Multipass VM
+## Connect VS Code
 
-1. Open VSCode and click on the green button in the bottom left corner; this
-   should open a menu listing several "Remote-SSH" options.
-1. Click "Remote-SSH: Connect to Host..." and enter `ubuntu@${IP_ADDRESS:?}`
-   using the value you looked up in the previous section.
-1. This will open a new VSCode window; feel free to close the old window.
-1. After a brief installation of the VSCode back end onto your VM, the bottom
-   left corner's green button should now read `SSH: 192.168.64.5` (with your
-   VM's actual IP address).
+1. Open VS Code and click the green button in the lower-left corner.
+1. Select `Remote-SSH: Connect to Host...`.
+1. Enter `ubuntu@${IP_ADDRESS:?}`.
+1. Work in the new VS Code window that opens for the remote session.
+1. After the server install completes, the status bar should show `SSH: 192.168.64.5` or your VM's
+   actual IP address.

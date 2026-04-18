@@ -7,6 +7,6 @@
 
 ## Posts
 
-- [Using Multipass under macOS](multipass-macos.md)
+- [Using Multipass on macOS](multipass-macos.md)
 - [Aggregating benchmark metrics with missing results](aggregating-benchmark-metrics.md)
 - [Setting up a GitHub repository](github-repo-setup.md)
