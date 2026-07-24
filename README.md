@@ -1,4 +1,6 @@
-## Badges
+# Yury Bayda
+
+## Profiles
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Yury%20Bayda-blue?style=flat&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/yury-bayda/)
 [![Credly](https://img.shields.io/badge/Credly-Yury%20Bayda-orange?style=flat&logo=Credly&logoColor=white)](https://www.credly.com/users/yury-bayda/badges)

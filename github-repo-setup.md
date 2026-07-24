@@ -1,7 +1,7 @@
 # Setting up a GitHub repository
 
-The target policy is straightforward: `main` is pull-request-only, CI is a required gate, history
-stays linear, stale branches disappear automatically, and release tags do not move.
+The target policy keeps `main` pull-request-only, requires CI, preserves linear history, deletes
+merged head branches, and prevents release tags from moving.
 
 ## Target policy
 
@@ -9,7 +9,7 @@ stays linear, stale branches disappear automatically, and release tags do not mo
 - All changes go through pull requests
 - CI is a required gate
 - History is linear and readable
-- No stale branches
+- Merged head branches are deleted automatically
 - Release tags are immutable
 
 > [!NOTE]
@@ -103,24 +103,24 @@ Create a second ruleset with:
 - Apply to: `v*`
 
 ```diff
-+ Restrict tag creation
 - Allow deletion
 - Allow updates
 ```
 
-## Bootstrap Script
+## Bootstrap script
 
 > [!IMPORTANT]
 >
-> Start by editing
-> [`assets/github-repo-setup/CODEOWNERS.example`](assets/github-repo-setup/CODEOWNERS.example).
+> Copy [`assets/github-repo-setup/CODEOWNERS.example`](assets/github-repo-setup/CODEOWNERS.example)
+> to `.github/CODEOWNERS` in the target repository and replace the placeholder teams.
 > Review [`assets/github-repo-setup/ruleset-main.json`](assets/github-repo-setup/ruleset-main.json)
 > and [`assets/github-repo-setup/ruleset-tags.json`](assets/github-repo-setup/ruleset-tags.json).
 > Change them only if your repository needs different checks or exceptions.
 
 Then run [`assets/github-repo-setup/bootstrap.sh`](assets/github-repo-setup/bootstrap.sh). It
 applies the repository settings and both rulesets in one pass. The script resolves its JSON inputs
-relative to its own location, so you can invoke it from anywhere:
+relative to its own location, so you can invoke it from anywhere. Commit `CODEOWNERS` separately;
+the script does not copy it into the target repository.
 
 ```bash
 ./assets/github-repo-setup/bootstrap.sh OWNER/REPO

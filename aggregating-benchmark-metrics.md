@@ -2,8 +2,8 @@
 
 Missing benchmark results create two separate problems. First, you need the right suite-level
 metric. Second, you need to decide which quantity is still identifiable once some workloads fail. If
-those two problems are mixed together, the aggregate, the interval, and the comparison all drift in
-the same direction.
+those problems are mixed together, the aggregate, interval, and comparison can answer different
+questions.
 
 ## Define the estimand before you aggregate
 
@@ -48,8 +48,8 @@ Then a natural suite-level aggregate is the weighted mean:
 If the suite defines a different aggregation rule, for example a geometric mean of normalized
 ratios, use that rule directly instead of silently replacing it with an arithmetic mean.
 
-This step is structural, not cosmetic. If the estimand is wrong, the interval calculation and the
-missing-data treatment will also be wrong.
+This step is structural, not cosmetic. If the estimand is wrong, the interval and missing-data
+treatment will describe the wrong quantity.
 
 ## A small example
 
@@ -93,7 +93,7 @@ workload mix represented by the suite.
 
 ## Use a paired bootstrap as the default
 
-For most benchmark comparisons, the paired bootstrap is the cleanest default.[^1]
+For most benchmark comparisons, use a paired bootstrap by default.[^1]
 
 1. Resample benchmark indices with replacement.
 2. Keep each benchmark's weight and all measurements for that benchmark together.
@@ -143,7 +143,7 @@ interval is often more stable:
 ```
 
 For benchmark-level weighted means, simpler formulas are often enough. In practice, though, using
-the paired bootstrap everywhere is usually easier to explain and harder to misuse.
+the paired bootstrap for both metric families is usually easier to explain and harder to misuse.
 
 ## Check weight concentration
 
@@ -186,8 +186,7 @@ or:
 R = \frac{\widehat{M}_{B,S}}{\widehat{M}_{A,S}}
 ```
 
-with the obvious substitution of $\bar{M}$ if the aggregate is a weighted mean rather than a ratio
-metric.
+For a weighted-mean aggregate, substitute $\bar{M}$ for $\widehat{M}$.
 
 This matters because comparing $A$ on one benchmark set and $B$ on another mixes a performance claim
 with a coverage claim. That can be a valid quantity, but it should be an explicit choice.

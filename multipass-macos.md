@@ -23,14 +23,13 @@ or VS Code.
 
 1. Make sure you have an SSH public key at `~/.ssh/id_rsa.pub`.
    - If you do not, generate one with `ssh-keygen -t rsa`.
-   - If you leave the passphrase empty, just press ENTER at the prompt.
-   - If you created a new key, restart Terminal so the new shell session picks it up cleanly.
 
-1. Install and configure [XQuartz](https://www.xquartz.org) if you need X11 forwarding.
-   - Download and install the DMG from the project website.
-   - Log out and back in, or reboot, after installation.
-   - In XQuartz preferences, enable `Allow connections from network clients`.
-   - Start XQuartz, then run `xhost +` on the host.
+1. Install [XQuartz](https://www.xquartz.org) if you need X11 forwarding, then log out and back in or
+   reboot.
+
+1. Install the
+   [VS Code Remote - SSH extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh)
+   if you plan to connect from VS Code.
 
 ## Launch the VM
 
@@ -80,8 +79,7 @@ or VS Code.
 
 ## Connect VS Code
 
-1. Open VS Code and click the green button in the lower-left corner.
-1. Select `Remote-SSH: Connect to Host...`.
+1. In VS Code, open the Command Palette and select `Remote-SSH: Connect to Host...`.
 1. Enter `ubuntu@${IP_ADDRESS:?}`.
 1. Work in the new VS Code window that opens for the remote session.
 1. After the server install completes, the status bar should show `SSH: 192.168.64.5` or your VM's
