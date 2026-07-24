@@ -1,5 +1,7 @@
 # Setting up a GitHub repository
 
+_Last verified: 2026-07-23._
+
 The target policy keeps `main` pull-request-only, requires CI, preserves linear history, deletes
 merged head branches, and prevents release tags from moving.
 
@@ -112,10 +114,10 @@ Create a second ruleset with:
 > [!IMPORTANT]
 >
 > Copy [`assets/github-repo-setup/CODEOWNERS.example`](assets/github-repo-setup/CODEOWNERS.example)
-> to `.github/CODEOWNERS` in the target repository and replace the placeholder teams.
-> Review [`assets/github-repo-setup/ruleset-main.json`](assets/github-repo-setup/ruleset-main.json)
-> and [`assets/github-repo-setup/ruleset-tags.json`](assets/github-repo-setup/ruleset-tags.json).
-> Change them only if your repository needs different checks or exceptions.
+> to `.github/CODEOWNERS` in the target repository and replace the placeholder teams. Review
+> [`assets/github-repo-setup/ruleset-main.json`](assets/github-repo-setup/ruleset-main.json) and
+> [`assets/github-repo-setup/ruleset-tags.json`](assets/github-repo-setup/ruleset-tags.json). Change
+> them only if your repository needs different checks or exceptions.
 
 Then run [`assets/github-repo-setup/bootstrap.sh`](assets/github-repo-setup/bootstrap.sh). It
 applies the repository settings and both rulesets in one pass. The script resolves its JSON inputs

@@ -1,5 +1,7 @@
 # Using Multipass on macOS
 
+_Last verified: 2026-07-23._
+
 This note covers the host-side setup, launching a `primary` VM, and connecting to it from a terminal
 or VS Code.
 
@@ -24,8 +26,8 @@ or VS Code.
 1. Make sure you have an SSH public key at `~/.ssh/id_rsa.pub`.
    - If you do not, generate one with `ssh-keygen -t rsa`.
 
-1. Install [XQuartz](https://www.xquartz.org) if you need X11 forwarding, then log out and back in or
-   reboot.
+1. Install [XQuartz](https://www.xquartz.org) if you need X11 forwarding, then log out and back in
+   or reboot.
 
 1. Install the
    [VS Code Remote - SSH extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh)
