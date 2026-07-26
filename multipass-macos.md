@@ -23,8 +23,8 @@ or VS Code.
    multipassd  1.13.1+mac
    ```
 
-1. Make sure you have an SSH public key at `~/.ssh/id_rsa.pub`.
-   - If you do not, generate one with `ssh-keygen -t rsa`.
+1. Make sure you have an SSH public key at `~/.ssh/id_ed25519.pub`.
+   - If you do not, generate one with `ssh-keygen -t ed25519`.
 
 1. Install [XQuartz](https://www.xquartz.org) if you need X11 forwarding, then log out and back in
    or reboot.
@@ -39,9 +39,10 @@ or VS Code.
    integration:
 
    ```console
-   $ multipass launch --name primary --cpus 4 --mem 4G --disk 10G --cloud-init - <<EOF
+   $ multipass launch --name primary --cpus 4 --memory 4G --disk 10G --cloud-init - <<EOF
+   #cloud-config
    ssh_authorized_keys:
-     - $(cat ~/.ssh/id_rsa.pub)
+     - $(cat ~/.ssh/id_ed25519.pub)
    package_upgrade: true
    packages:
      - build-essential
@@ -82,7 +83,7 @@ or VS Code.
 ## Connect VS Code
 
 1. In VS Code, open the Command Palette and select `Remote-SSH: Connect to Host...`.
-1. Enter `ubuntu@${IP_ADDRESS:?}`.
+1. Enter `ubuntu@<VM-IP>`, using the address you resolved above.
 1. Work in the new VS Code window that opens for the remote session.
 1. After the server install completes, the status bar should show `SSH: 192.168.64.5` or your VM's
    actual IP address.
