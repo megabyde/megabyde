@@ -95,6 +95,8 @@ Typical checks:
 
 ### Protections
 
+Leave both of these off:
+
 ```diff
 - Allow force pushes
 - Allow deletions
@@ -120,6 +122,8 @@ Create a second ruleset with:
 
 - Target: Tags
 - Apply to: `v*`
+
+Leave both of these off, which is what makes a published tag immutable:
 
 ```diff
 - Allow deletion
