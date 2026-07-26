@@ -46,8 +46,29 @@ Then a natural suite-level aggregate is the weighted mean:
      {\sum_i w_i}
 ```
 
-If the suite defines a different aggregation rule, for example a geometric mean of normalized
-ratios, use that rule directly instead of silently replacing it with an arithmetic mean.
+If the suite defines a different aggregation rule, use that rule directly instead of silently
+replacing it with an arithmetic mean.
+
+### Geometric means
+
+Suites such as SPEC CPU aggregate normalized ratios with a weighted geometric mean:
+
+```math
+\tilde{M}_X
+=
+\exp\left(
+\frac{\sum_i w_i \log m_{Xi}}
+     {\sum_i w_i}
+\right)
+```
+
+This applies the weighted mean from the previous section to $\log m_{Xi}$, so everything below
+transfers without modification: resample benchmarks, aggregate on the log scale, and exponentiate at
+the end.
+
+It is defined only for strictly positive $m_{Xi}$, which is why a failed measurement cannot simply
+be recorded as zero and averaged in. A single zero sends the aggregate to zero, and that is a
+missing-data problem rather than a very bad score.
 
 This step is structural, not cosmetic. If the estimand is wrong, the interval and missing-data
 treatment will describe the wrong quantity.
@@ -112,7 +133,26 @@ benchmarks, then resample runs within each selected benchmark, and recompute the
 resampled runs.
 
 The same bootstrap machinery works for weighted means, ratio metrics, and most practical comparison
-statistics.
+statistics. For a ratio-of-totals metric compared across two configurations:
+
+```python
+import numpy as np
+
+
+def paired_bootstrap(n_a, d_a, n_b, d_b, w, reps=10_000, seed=0):
+    """Percentile interval for the ratio of B's aggregate to A's."""
+    rng = np.random.default_rng(seed)
+    idx = rng.integers(0, len(w), (reps, len(w)))
+
+    def aggregate(n, d):
+        return (w[idx] * n[idx]).sum(axis=1) / (w[idx] * d[idx]).sum(axis=1)
+
+    return np.percentile(aggregate(n_b, d_b) / aggregate(n_a, d_a), [2.5, 97.5])
+```
+
+The shared `idx` preserves the pairing: both configurations are recomputed on the same resampled
+benchmarks. Drawing independent index sets discards the correlation between $A$ and $B$, so the
+interval no longer describes the paired comparison.
 
 ## Use the delta method when you want a fast analytic approximation
 
@@ -226,6 +266,11 @@ different estimands:
 This is standard missing-data territory. If failures are related to the unobserved outcome, the
 missingness is effectively MNAR and the full-suite quantity cannot be recovered from observed runs
 alone.
+
+Even when its magnitude is unknown, the direction can often be identified. If $B$ fails the
+workloads it handles worst, then $S_A \cap S_B$ excludes exactly the cases where $B$ looks bad, and
+the common-suite comparison is optimistic for $B$. Report the failure list next to the aggregate and
+state which configuration the exclusions favour.
 
 The consequence depends on the metric family.
 
