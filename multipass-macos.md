@@ -17,11 +17,12 @@ or VS Code.
 
 1. Verify that the CLI and daemon are available:
 
-   ```console
-   $ multipass version
-   multipass   1.13.1+mac
-   multipassd  1.13.1+mac
+   ```bash
+   multipass version
    ```
+
+   The output should contain both a `multipass` and a `multipassd` line. If the daemon line is
+   missing or the command hangs, resolve the service failure before continuing.
 
 1. Make sure you have an SSH public key at `~/.ssh/id_ed25519.pub`.
    - If you do not, generate one with `ssh-keygen -t ed25519`.
