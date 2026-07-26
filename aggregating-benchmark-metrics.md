@@ -30,8 +30,9 @@ Then the suite-level metric is:
 This covers IPC, cache miss rate, work per joule, and any other quantity that is naturally defined
 as a ratio of totals.
 
-This is not the same as a weighted mean of the per-benchmark values unless the weights are
-proportional to the denominator.
+This is itself a weighted mean of the per-benchmark values $m_{Xi}$, but with effective weights
+$w_i d_{Xi}$ rather than $w_i$. Benchmarks with large denominators carry proportionally more of the
+aggregate, and the two weightings agree only when every benchmark contributes the same denominator.
 
 ### Benchmark-level scores
 
@@ -104,6 +105,12 @@ The important detail is pairing. If benchmark $i$ has results for both $A$ and $
 must keep that pair together. Treating the two configurations as independent samples throws away
 correlation that is actually present in the data.
 
+Note what this does and does not cover. Resampling benchmark indices propagates uncertainty about
+the workload mix, which is the suite stability reading above. It says nothing about run-to-run
+measurement noise. If replicate runs matter for your setup, use a two-level bootstrap: resample
+benchmarks, then resample runs within each selected benchmark, and recompute the aggregate from the
+resampled runs.
+
 The same bootstrap machinery works for weighted means, ratio metrics, and most practical comparison
 statistics.
 
@@ -141,6 +148,22 @@ interval is often more stable:
 ```math
 \log \hat{r} = \log \bar{a} - \log \bar{b}
 ```
+
+```math
+\mathrm{Var}(\log \hat{r})
+\approx
+\frac{1}{n}
+\left(
+\frac{s_{aa}}{\bar{a}^2}
+-
+\frac{2s_{ab}}{\bar{a}\bar{b}}
++
+\frac{s_{bb}}{\bar{b}^2}
+\right)
+```
+
+Build the interval on the log scale and exponentiate the endpoints. That keeps the interval positive
+and avoids the asymmetry you get from a symmetric interval around a ratio.
 
 For benchmark-level weighted means, simpler formulas are often enough. In practice, though, using
 the paired bootstrap for both metric families is usually easier to explain and harder to misuse.
@@ -205,6 +228,36 @@ missingness is effectively MNAR and the full-suite quantity cannot be recovered 
 alone.
 
 The consequence depends on the metric family.
+
+### If the metric is a ratio of totals
+
+Here the bound needs the numerator and the denominator separately. Write the observed totals and the
+missing weight as:
+
+```math
+N = \sum_{i \in S_B} w_i n_{Bi},
+\qquad
+D = \sum_{i \in S_B} w_i d_{Bi},
+\qquad
+W = \sum_{i \notin S_B} w_i
+```
+
+Suppose every missing benchmark satisfies $n_{\min} \le n_{Bi} \le n_{\max}$ and
+$d_{\min} \le d_{Bi} \le d_{\max}$. The aggregate increases in the numerator and decreases in the
+denominator, so the extremes sit at opposite corners:
+
+```math
+\frac{N + W n_{\min}}{D + W d_{\max}}
+\le
+\widehat{M}_B
+\le
+\frac{N + W n_{\max}}{D + W d_{\min}}
+```
+
+This assumes the two components can be bounded independently. If you can bound the per-benchmark
+ratio $m_{Bi}$ instead, the effective-weight form from the first section gives a tighter result. The
+two components move the bound in opposite directions, which is why bounding a ratio metric takes
+more prior information than bounding a score.
 
 ### If the metric is a benchmark-level score
 
