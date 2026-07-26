@@ -27,6 +27,9 @@ In `Settings -> General -> Pull Requests`:
 - Optionally allow rebase merging if you want to preserve commit boundaries
 - Enable automatic deletion of head branches
 
+The bootstrap script below leaves squash as the only merge mode. Drop the
+`--enable-rebase-merge=false` line if you want rebase merges as well.
+
 Keep the allowed merge modes aligned with the history policy. If you require linear history, leaving
 merge commits enabled just creates dead settings.
 
@@ -48,11 +51,23 @@ Then enable the following requirements.
 + Require approval of most recent push
 ```
 
+> [!WARNING]
+>
+> GitHub does not let you approve your own pull request. On a repository with one maintainer,
+> requiring at least one approval and leaving the bypass list empty means nothing can ever merge
+> into `main`. For a solo repository, set the approval count to 0, or add yourself to the ruleset
+> bypass list.
+
 ### Status checks
 
 ```diff
 + Require status checks to pass
 ```
+
+> [!TIP]
+>
+> Require branches to be up to date before merging if you want a stricter merge queue. The shipped
+> ruleset turns this on through `strict_required_status_checks_policy`.
 
 Typical checks:
 
@@ -60,9 +75,11 @@ Typical checks:
 - test
 - lint
 
-> [!TIP]
+> [!WARNING]
 >
-> Require branches to be up to date before merging if you want a stricter merge queue.
+> A required check that no workflow reports stays pending forever and blocks the pull request. It
+> does not pass by default. Every context you list here must match the name of a check the
+> repository actually produces, which for a GitHub Actions job is the job name.
 
 ### Conversation requirements
 
@@ -113,16 +130,27 @@ Create a second ruleset with:
 
 > [!IMPORTANT]
 >
-> Copy [`assets/github-repo-setup/CODEOWNERS.example`](assets/github-repo-setup/CODEOWNERS.example)
-> to `.github/CODEOWNERS` in the target repository and replace the placeholder teams. Review
+> The shipped rulesets encode the team-oriented policy above. Read
 > [`assets/github-repo-setup/ruleset-main.json`](assets/github-repo-setup/ruleset-main.json) and
-> [`assets/github-repo-setup/ruleset-tags.json`](assets/github-repo-setup/ruleset-tags.json). Change
-> them only if your repository needs different checks or exceptions.
+> [`assets/github-repo-setup/ruleset-tags.json`](assets/github-repo-setup/ruleset-tags.json) and
+> adjust three things before you run anything:
+>
+> - `required_status_checks`: replace `build`, `test`, and `lint` with the checks your repository
+>   really reports. Extra names block every pull request.
+> - `required_approving_review_count` and `bypass_actors`: set the count to 0 or add yourself to the
+>   bypass list if you are the only maintainer.
+> - `require_code_owner_review`: leave it on only if you are going to commit a `CODEOWNERS` file
+>   with owners who can actually review.
+>
+> If you want code owners, copy
+> [`assets/github-repo-setup/CODEOWNERS.example`](assets/github-repo-setup/CODEOWNERS.example) to
+> `.github/CODEOWNERS` in the target repository and replace the placeholder teams.
 
 Then run [`assets/github-repo-setup/bootstrap.sh`](assets/github-repo-setup/bootstrap.sh). It
 applies the repository settings and both rulesets in one pass. The script resolves its JSON inputs
-relative to its own location, so you can invoke it from anywhere. Commit `CODEOWNERS` separately;
-the script does not copy it into the target repository.
+relative to its own location, so you can invoke it from anywhere. It matches existing rulesets by
+name and updates them in place, so re-running it after editing the JSON is safe. Commit `CODEOWNERS`
+separately; the script does not copy it into the target repository.
 
 ```bash
 ./assets/github-repo-setup/bootstrap.sh OWNER/REPO
