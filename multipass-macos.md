@@ -3,7 +3,23 @@
 _Last verified: 2026-07-23._
 
 This note covers the host-side setup, launching a `primary` VM, and connecting to it from a terminal
-or VS Code.
+or VS Code. Setup is complete when `multipass list` reports `primary` as running and at least one
+connection method opens a guest shell.
+
+## Before you start
+
+Required:
+
+- [Homebrew](https://brew.sh)
+- An SSH public key at `~/.ssh/id_ed25519.pub`; if it is missing, create it with
+  `ssh-keygen -t ed25519`
+
+Optional:
+
+- [XQuartz](https://www.xquartz.org) for X11 forwarding; after installing it, log out and back in or
+  reboot
+- [VS Code Remote - SSH](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh)
+  for a VS Code connection
 
 ## Prepare the host
 
@@ -22,17 +38,8 @@ or VS Code.
    ```
 
    The output should contain both a `multipass` and a `multipassd` line. If the daemon line is
-   missing or the command hangs, resolve the service failure before continuing.
-
-1. Make sure you have an SSH public key at `~/.ssh/id_ed25519.pub`.
-   - If you do not, generate one with `ssh-keygen -t ed25519`.
-
-1. Install [XQuartz](https://www.xquartz.org) if you need X11 forwarding, then log out and back in
-   or reboot.
-
-1. Install the
-   [VS Code Remote - SSH extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh)
-   if you plan to connect from VS Code.
+   missing or the command hangs, restart Multipass and rerun `multipass version`. Do not launch the
+   VM until both lines appear.
 
 ## Launch the VM
 
@@ -88,3 +95,14 @@ or VS Code.
 1. Work in the new VS Code window that opens for the remote session.
 1. After the server install completes, the status bar should show `SSH: 192.168.64.5` or your VM's
    actual IP address.
+
+   If the server install fails, connect with `multipass shell primary` first. This separates a VM
+   problem from a VS Code Remote - SSH problem.
+
+## Completion check
+
+The setup is complete when:
+
+- `multipass list` reports `primary` as `Running`
+- `multipass shell primary` or `ssh -X ubuntu@${IP_ADDRESS:?}` opens a guest shell
+- If you use VS Code, its status bar shows `SSH: <VM-IP>`
