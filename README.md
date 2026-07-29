@@ -1,5 +1,18 @@
 # Yury Bayda
 
+## Selected projects
+
+- [webinar-transcriber](https://github.com/megabyde/webinar-transcriber): local-first CLI that turns
+  webinar audio and slide videos into transcripts, reports, and diagnostics
+- [cpp-boilerplate](https://github.com/megabyde/cpp-boilerplate): C++23 project template with Conan
+  2, CMake presets, sanitizers, coverage, and CI
+- [Coding Cuddles](https://github.com/Coding-Cuddles): C++ and Python katas for practicing clean
+  code, refactoring, and test-driven development
+- [pandoc-minted](https://github.com/megabyde/pandoc-minted): Pandoc filter for typesetting code
+  with minted in LaTeX output
+- [math-rus-eng-cheatsheet](https://github.com/megabyde/math-rus-eng-cheatsheet): English
+  mathematical writing reference for Russian speakers
+
 ## Posts
 
 - [Using Multipass on macOS](multipass-macos.md)
