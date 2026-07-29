@@ -18,6 +18,16 @@ merged head branches, and prevents release tags from moving.
 >
 > Prefer **Rulesets** over legacy branch protection.
 
+## Choose a setup path
+
+- **Bootstrap script (recommended):** review the policy sections below, then run the shipped script
+  to apply the repository settings and both rulesets consistently.
+- **Manual setup:** follow the settings sections in the GitHub UI when the repository needs a policy
+  that the script does not encode.
+
+The sections below define the baseline for both paths. Do not apply both unless you are correcting
+or verifying an existing configuration.
+
 ## Configure merge policy
 
 In `Settings -> General -> Pull Requests`:
@@ -102,7 +112,9 @@ Leave both of these off:
 - Allow deletions
 ```
 
-## Add `CODEOWNERS`
+## Optionally add `CODEOWNERS`
+
+The baseline ruleset does not require code-owner review. If the repository has stable owners, add:
 
 ```text
 .github/CODEOWNERS
@@ -110,7 +122,8 @@ Leave both of these off:
 
 Start from
 [`assets/github-repo-setup/CODEOWNERS.example`](assets/github-repo-setup/CODEOWNERS.example) and
-replace the placeholder teams.
+replace the placeholder teams. Then change `require_code_owner_review` to `true` in the branch
+ruleset.
 
 ```diff
 + Require review from Code Owners
@@ -132,19 +145,32 @@ Leave both of these off, which is what makes a published tag immutable:
 
 ## Bootstrap script
 
+The script requires repository administration access, `gh`, `jq`, an authenticated GitHub CLI, and
+the exact names of any required status checks. Verify the local prerequisites and repository access:
+
+```bash
+command -v gh
+command -v jq
+gh auth status
+gh repo view OWNER/REPO
+```
+
+All four commands must succeed before continuing. If authentication fails, authenticate `gh` using
+your normal credential provider, then rerun `gh auth status`.
+
 > [!IMPORTANT]
 >
-> The shipped rulesets encode the team-oriented policy above. Read
+> The shipped rulesets encode the baseline policy above. Read
 > [`assets/github-repo-setup/ruleset-main.json`](assets/github-repo-setup/ruleset-main.json) and
 > [`assets/github-repo-setup/ruleset-tags.json`](assets/github-repo-setup/ruleset-tags.json) and
-> adjust three things before you run anything:
+> confirm these points before you run anything:
 >
-> - `required_status_checks`: replace `build`, `test`, and `lint` with the checks your repository
->   really reports. Extra names block every pull request.
-> - `required_approving_review_count` and `bypass_actors`: set the count to 0 or add yourself to the
->   bypass list if you are the only maintainer.
-> - `require_code_owner_review`: leave it on only if you are going to commit a `CODEOWNERS` file
->   with owners who can actually review.
+> - Required status checks: pass the exact checks your repository reports as command arguments.
+>   Extra names block every pull request. Pass no checks only when CI should not be required.
+> - Approval bypass: the script selects repository admins for personal repositories and organization
+>   admins for organization repositories. Review this if admins should not bypass the rulesets.
+> - Code-owner review: the baseline leaves it off. Enable it only after committing a `CODEOWNERS`
+>   file with owners who can actually review.
 >
 > If you want code owners, copy
 > [`assets/github-repo-setup/CODEOWNERS.example`](assets/github-repo-setup/CODEOWNERS.example) to
@@ -153,9 +179,54 @@ Leave both of these off, which is what makes a published tag immutable:
 Then run [`assets/github-repo-setup/bootstrap.sh`](assets/github-repo-setup/bootstrap.sh). It
 applies the repository settings and both rulesets in one pass. The script resolves its JSON inputs
 relative to its own location, so you can invoke it from anywhere. It matches existing rulesets by
-name and updates them in place, so re-running it after editing the JSON is safe. Commit `CODEOWNERS`
+name, updates them in place, and preserves rules outside this baseline. Commit `CODEOWNERS`
 separately; the script does not copy it into the target repository.
 
 ```bash
+./assets/github-repo-setup/bootstrap.sh OWNER/REPO build test lint
+
+# Or, if status checks should not be required:
 ./assets/github-repo-setup/bootstrap.sh OWNER/REPO
 ```
+
+## Verify the setup
+
+Verify the repository merge settings:
+
+```bash
+gh api repos/OWNER/REPO \
+  --jq '{allow_squash_merge, allow_merge_commit, allow_rebase_merge, delete_branch_on_merge}'
+```
+
+The result should be:
+
+```json
+{
+  "allow_merge_commit": false,
+  "allow_rebase_merge": false,
+  "allow_squash_merge": true,
+  "delete_branch_on_merge": true
+}
+```
+
+Verify that both rulesets are active:
+
+```bash
+gh api repos/OWNER/REPO/rulesets \
+  --jq '.[] | select(.name == "Protect main" or .name == "Protect tags") | "\(.name): \(.enforcement)"'
+```
+
+The output should contain:
+
+```text
+Protect main: active
+Protect tags: active
+```
+
+Finally, open the `Protect main` ruleset in GitHub and confirm that its required status checks match
+the checks produced by the repository workflows. The setup is complete when the merge settings match
+the JSON above, both rulesets are active, and every required status check has an exact workflow
+check match.
+
+If verification fails, correct the inputs and rerun the script. It updates matching rulesets in
+place and preserves rules outside this baseline.
