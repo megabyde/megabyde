@@ -5,6 +5,28 @@ metric. Second, you need to decide which quantity is still identifiable once som
 those problems are mixed together, the aggregate, interval, and comparison can answer different
 questions.
 
+## Analysis workflow
+
+Before aggregating, collect each benchmark's weight, observed metric or additive components,
+configuration, and success or failure status. Keep replicate runs if the analysis must include
+run-to-run measurement noise.
+
+Use this sequence:
+
+1. Define whether the suite metric is a ratio of additive totals, a benchmark-level score, or a
+   geometric mean.
+2. Define the benchmark set used for comparison. Use the common suite when comparing configurations
+   unless coverage is part of the estimand.
+3. Separate the observed common-suite result from any full-suite result that requires assumptions
+   about missing benchmarks.
+4. Quantify suite stability with a paired bootstrap, adding within-benchmark resampling only when
+   replicate-run noise matters.
+5. Report the aggregate definition, comparison set, interval interpretation, failed benchmarks, and
+   direction of any likely missingness bias.
+
+The analysis is complete only when the reported aggregate, interval, and comparison refer to the
+same estimand and benchmark set.
+
 ## Define the estimand before you aggregate
 
 For benchmark $i$ and configuration $X \in \{A, B\}$, let $w_i \ge 0$ be the benchmark importance
