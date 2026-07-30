@@ -1,4 +1,11 @@
-# Yury Bayda
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Yury%20Bayda-blue?style=flat&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/yury-bayda/)
+[![Credly](https://img.shields.io/badge/Credly-Yury%20Bayda-orange?style=flat&logo=Credly&logoColor=white)](https://www.credly.com/users/yury-bayda/badges)
+
+[![Stack Overflow](https://img.shields.io/stackexchange/stackoverflow/r/2900735?style=flat&logo=StackOverflow&logoColor=%23F58025&label=Stack%20Overflow&color=%23303846)](https://stackoverflow.com/users/2900735/yury-bayda)
+[![TeX - LaTeX](https://img.shields.io/stackexchange/tex/r/32416?style=flat&logo=LaTeX&logoColor=%23F58025&label=TeX%20-%20LaTeX&color=%23303846)](https://tex.stackexchange.com/users/32416/yury-bayda)
+[![English Language & Usage](https://img.shields.io/stackexchange/english/r/54535?style=flat&logo=StackExchange&logoColor=%23F58025&label=English%20Language%20%26%20Usage&color=%23303846)](https://english.stackexchange.com/users/54535/yury-bayda)
+
+## About me
 
 I work on silicon power/performance modeling and simulation, and the infrastructure and tooling
 around them, primarily in C++ and Python. My experience spans CPU, SoC, and multi-chip designs,
@@ -24,10 +31,3 @@ builds, refactoring exercises, and technical publishing.
 - [Using Multipass on macOS](multipass-macos.md)
 - [Aggregating benchmark metrics with missing results](aggregating-benchmark-metrics.md)
 - [Setting up a GitHub repository](github-repo-setup.md)
-
-## Profiles
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Yury%20Bayda-blue?style=flat&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/yury-bayda/)
-[![Credly](https://img.shields.io/badge/Credly-Yury%20Bayda-orange?style=flat&logo=Credly&logoColor=white)](https://www.credly.com/users/yury-bayda/badges)
-
-[![StackOverflow](https://stackexchange.com/users/flair/2912684.png)](https://stackexchange.com/users/2912684/yury-bayda?tab=accounts)
