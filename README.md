@@ -1,5 +1,11 @@
 # Yury Bayda
 
+I work on silicon power/performance modeling and simulation, and the infrastructure and tooling
+around them, primarily in C++ and Python. My experience spans CPU, SoC, and multi-chip designs,
+including automotive. Earlier work includes FPGA-accelerated microprocessor simulation and
+publications on modeling methodology. The projects below cover local-first processing, reproducible
+builds, refactoring exercises, and technical publishing.
+
 ## Selected projects
 
 - [webinar-transcriber](https://github.com/megabyde/webinar-transcriber): local-first CLI that turns
