@@ -1,8 +1,8 @@
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Yury%20Bayda-blue?style=flat&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/yury-bayda/)
 [![Credly](https://img.shields.io/badge/Credly-Yury%20Bayda-orange?style=flat&logo=Credly&logoColor=white)](https://www.credly.com/users/yury-bayda/badges)
 [![Stack Overflow](https://img.shields.io/stackexchange/stackoverflow/r/2900735?style=flat&logo=StackOverflow&logoColor=%23F58025&label=Stack%20Overflow&color=%23303846)](https://stackoverflow.com/users/2900735/yury-bayda)
-[![TeX](https://img.shields.io/stackexchange/tex/r/32416?style=flat&logo=LaTeX&logoColor=%23F58025&label=TeX&color=%23303846)](https://tex.stackexchange.com/users/32416/yury-bayda)
-[![English Language](https://img.shields.io/stackexchange/english/r/54535?style=flat&logo=StackExchange&logoColor=%23F58025&label=English%20Language&color=%23303846)](https://english.stackexchange.com/users/54535/yury-bayda)
+[![TeX](https://img.shields.io/stackexchange/tex/r/32416?style=flat&logo=LaTeX&logoColor=white&label=TeX&color=%235C2A2A)](https://tex.stackexchange.com/users/32416/yury-bayda)
+[![English Language](https://img.shields.io/stackexchange/english/r/54535?style=flat&logo=StackExchange&logoColor=white&label=English%20Language&color=%23303846)](https://english.stackexchange.com/users/54535/yury-bayda)
 
 ## About me
 
