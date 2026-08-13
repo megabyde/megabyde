@@ -6,11 +6,11 @@
 
 ## About me
 
-I work on silicon power/performance modeling and simulation, and the infrastructure and tooling
-around them, primarily in C++ and Python. My experience spans CPU, SoC, and multi-chip designs,
-including automotive. Earlier work includes FPGA-accelerated microprocessor simulation and
-publications on modeling methodology. The projects below cover local-first processing, reproducible
-builds, refactoring exercises, and technical publishing.
+I work on power, performance, and functional models of silicon designs, and the infrastructure and
+tooling around them, primarily in C++ and Python. My experience spans CPU, SoC, and multi-chip
+designs; distributed simulation platforms across HPC and cloud; and automotive multi-ECU simulation.
+Earlier work includes FPGA-accelerated microprocessor simulation. The projects below cover
+local-first processing, reproducible builds, refactoring exercises, and technical publishing.
 
 ## Selected projects
 
