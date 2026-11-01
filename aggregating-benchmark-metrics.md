@@ -52,8 +52,8 @@ Then the suite-level metric is:
 This covers IPC, cache miss rate, work per joule, and any other quantity that is naturally defined
 as a ratio of totals.
 
-This is itself a weighted mean of the per-benchmark values $m_{Xi}$, but with effective weights
-$w_i d_{Xi}$ rather than $w_i$. Benchmarks with large denominators carry proportionally more of the
+This is itself a weighted mean of the per-benchmark values $m_{Xi}$, but with effective weights $w_i
+d_{Xi}$ rather than $w_i$. Benchmarks with large denominators carry proportionally more of the
 aggregate, and the two weightings agree only when every benchmark contributes the same denominator.
 
 ### Benchmark-level scores
@@ -309,9 +309,9 @@ D = \sum_{i \in S_B} w_i d_{Bi},
 W = \sum_{i \notin S_B} w_i
 ```
 
-Suppose every missing benchmark satisfies $n_{\min} \le n_{Bi} \le n_{\max}$ and
-$d_{\min} \le d_{Bi} \le d_{\max}$. The aggregate increases in the numerator and decreases in the
-denominator, so the extremes sit at opposite corners:
+Suppose every missing benchmark satisfies $n_{\min} \le n_{Bi} \le n_{\max}$ and $d_{\min} \le
+d_{Bi} \le d_{\max}$. The aggregate increases in the numerator and decreases in the denominator, so
+the extremes sit at opposite corners:
 
 ```math
 \frac{N + W n_{\min}}{D + W d_{\max}}
