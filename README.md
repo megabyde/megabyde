@@ -6,24 +6,32 @@
 
 ## About me
 
-I work on power, performance, and functional models of silicon designs, and the infrastructure and
-tooling around them, primarily in C++ and Python. My experience spans CPU, SoC, and multi-chip
-designs; distributed simulation platforms across HPC and cloud; and automotive multi-ECU simulation.
-Earlier work includes FPGA-accelerated microprocessor simulation. The projects below cover
-local-first processing, reproducible builds, refactoring exercises, and technical publishing.
+I build power, performance, and functional models for CPUs, SoCs, and multi-chip designs, along with
+the simulation infrastructure and tools around them. My experience ranges from cycle-accurate and
+FPGA-based microprocessor simulation to distributed HPC and cloud platforms, including automotive
+multi-ECU simulation.
+
+Most of my work is in C++ and Python, and I’m currently learning Rust. I’ve also led
+multidisciplinary engineering teams and co-created Clean Code and Technical Writing programs that
+have trained hundreds of engineers.
+
+I enjoy figuring out how complex systems work, building tools that make engineering easier, and
+sharing what I learn.
 
 ## Selected projects
 
-- [webinar-transcriber](https://github.com/megabyde/webinar-transcriber): local-first CLI that turns
-  webinar audio and slide videos into transcripts, reports, and diagnostics
+- [Keyrill](https://github.com/megabyde/keyrill): Local English/Russian keyboard-layout correction
+  with a Rust engine and native macOS input method (alpha).
+- [webinar-transcriber](https://github.com/megabyde/webinar-transcriber): Local-first CLI for
+  turning webinar recordings into transcripts, reports, and diagnostics.
+- [Coding Cuddles](https://github.com/Coding-Cuddles): C++ and Python exercises for practicing clean
+  code, refactoring, and test-driven development.
 - [cpp-boilerplate](https://github.com/megabyde/cpp-boilerplate): C++23 project template with Conan
-  2, CMake presets, sanitizers, coverage, and CI
-- [Coding Cuddles](https://github.com/Coding-Cuddles): C++ and Python katas for practicing clean
-  code, refactoring, and test-driven development
+  2, CMake presets, sanitizers, coverage, and CI.
 - [pandoc-minted](https://github.com/megabyde/pandoc-minted): Pandoc filter for typesetting code
-  with minted in LaTeX output
-- [math-rus-eng-cheatsheet](https://github.com/megabyde/math-rus-eng-cheatsheet): English
-  mathematical writing reference for Russian speakers
+  with minted in LaTeX output.
+- [math-rus-eng-cheatsheet](https://github.com/megabyde/math-rus-eng-cheatsheet): A reference for
+  Russian speakers writing mathematics in English.
 
 ## Posts
 
